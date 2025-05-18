@@ -10,4 +10,9 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'walde';
+
+  getStarted(){
+    console.log("Clicked from app component");
+    
+  }
 }
