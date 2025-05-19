@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://app.walde.cloud'
+    apiUrl: 'https://backend.walde.cloud'
 };
