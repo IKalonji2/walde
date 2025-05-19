@@ -1,2 +1,60 @@
+<app-profile></app-profile>
 
-  <p>build works</p>
+<div class="max-w-5xl mx-auto py-10 px-4 space-y-6">
+  <!-- Header -->
+  <h2 class="text-2xl font-bold text-gray-800">🚧 Build Details</h2>
+
+  <!-- Metadata Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white p-6 rounded-lg shadow">
+    <div>
+      <p class="text-sm text-gray-500">App</p>
+      <p class="text-base font-semibold text-gray-800">{{ build?.appName || '-' }}</p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Repository</p>
+      <a [href]="build?.repoUrl" target="_blank" class="text-blue-600 hover:underline">
+        {{ build?.repoUrl || '-' }}
+      </a>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">App URL</p>
+      <a *ngIf="build?.appUrl" [href]="build?.appUrl" target="_blank" class="text-blue-600 hover:underline">
+        {{ build?.appUrl }}
+      </a>
+      <span *ngIf="!build?.appUrl">-</span>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Branch</p>
+      <p class="text-base text-gray-800 font-medium">{{ build?.branch || '-' }}</p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Status</p>
+      <span class="inline-block mt-1 px-3 py-1 text-sm font-semibold rounded-full"
+            [ngClass]="{
+              'bg-blue-100 text-blue-800': build?.status?.includes('building') || build?.status?.includes('queued'),
+              'bg-yellow-100 text-yellow-800': build?.status?.includes('pending'),
+              'bg-green-100 text-green-800': build?.status === 'success',
+              'bg-red-100 text-red-800': build?.status === 'failed'
+            }">
+        {{ build?.status || '-' }}
+      </span>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Output Directory</p>
+      <p class="text-base font-medium text-gray-800">{{ build?.outputDir || '-' }}</p>
+    </div>
+  </div>
+
+  <!-- Build Logs -->
+  <div class="bg-white rounded-lg shadow-md p-4">
+    <h3 class="text-lg font-semibold text-gray-800 mb-2">📄 Build Logs</h3>
+    <div class="bg-black text-white text-sm p-4 rounded-md h-80 overflow-y-scroll font-mono whitespace-pre-wrap">
+      {{ build?.log || 'No logs yet...' }}
+    </div>
+  </div>
+</div>

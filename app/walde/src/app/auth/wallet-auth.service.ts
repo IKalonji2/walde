@@ -23,7 +23,7 @@ export class WalletAuthService {
       alert("No Sui wallet detected");
       return this.walletAddress;
     } else {
-      const wallet = this.availableWallets[0]; // Or let user pick
+      const wallet = this.availableWallets[0];
       wallet.features['standard:connect'].connect()
         .then((accounts:any) => {
           console.log('Wallet connected! ', accounts.accounts[0].address);

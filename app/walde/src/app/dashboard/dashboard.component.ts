@@ -1,12 +1,72 @@
 import { Component } from '@angular/core';
+import { ProfileComponent } from '../profile/profile.component';
+import { ApiService } from '../services/api.service';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { CreateProjectModalComponent } from '../create-project-modal/create-project-modal.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [],
+  imports: [ProfileComponent, CommonModule, CreateProjectModalComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
+  profile: any;
+  projects: any[] = [
+    {
+      id: 1,
+      repoName: 'Hello Demo',
+      branch: 'main',
+      status: 'Pending'
+    },
+    {
+      id: 2,
+      repoName: 'Hello Demo',
+      branch: 'main',
+      status: 'Pending'
+    },
+    {
+      id: 3,
+      repoName: 'Hello Demo',
+      branch: 'main',
+      status: 'Pending'
+    },
+    {
+      id: 4,
+      repoName: 'Hello Demo',
+      branch: 'main',
+      status: 'Pending'
+    },
+  ];
 
+  showCreateModal = false;
+
+  constructor(private api: ApiService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.api.getProfile().subscribe({
+      next: (data) => {
+        this.profile = data;
+        this.loadProjects();
+      },
+      error: (err) => console.error('Failed to load profile', err)
+    });
+  }
+
+  loadProjects(): void {
+    this.api.getUserProjects().subscribe({
+      next: (data) => this.projects = data,
+      error: (err) => console.error('Failed to load projects', err)
+    });
+  }
+
+  goToBuild(buildId: string): void {
+    this.router.navigate(['/build', buildId]);
+  }
+
+  createNewProject(): void {
+    this.showCreateModal = true;
+  }
 }
