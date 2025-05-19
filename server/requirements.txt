@@ -1,0 +1,13 @@
+Flask
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-Cors
+Flask-DotEnv
+Flask-JWT-Extended
+requests
+PyGithub
+gunicorn
+celery
+redis
+cryptography
+python-dotenv
