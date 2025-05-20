@@ -37,7 +37,7 @@ def callback():
     user.encrypted_github_token = encrypt_token(access_token)
     db.session.commit()
 
-    return redirect("http://localhost:4200/dashboard")
+    return redirect("https://app.walde.cloud/dashboard")
 
 @bp.route('/webhook', methods=['POST'])
 def github_webhook():

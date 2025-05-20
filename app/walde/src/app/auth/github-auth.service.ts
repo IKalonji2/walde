@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -6,6 +7,6 @@ import { Injectable } from '@angular/core';
 export class GithubAuthService {
 
   redirectToGithubOAuth() {
-    window.location.href = 'http://localhost:5000/api/github/login';
+    window.location.href = `${environment.apiUrl}/api/github/login`;
   }
 }
