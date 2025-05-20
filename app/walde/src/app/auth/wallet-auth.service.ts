@@ -1,11 +1,15 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 import { getWallets } from '@mysten/wallet-standard';
+import { environment } from '../../environments/environment';
 // import { SuiService } from '../services/sui.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WalletAuthService {
+  private http = inject(HttpClient);
+
   walletAddress:any;
   availableWallets: any;
 
@@ -28,6 +32,14 @@ export class WalletAuthService {
         .then((accounts:any) => {
           console.log('Wallet connected! ', accounts.accounts[0].address);
           this.walletAddress = accounts.accounts[0].address;
+
+          this.http.post(
+            `${environment.apiUrl}/api/auth/wallet-login`, {"wallet_address":this.walletAddress}
+          ).subscribe({
+            next: (data:any) => localStorage.setItem('walde_token', data.access_token),
+            error: (err) => console.error('Error with wallet login', err)
+          });
+
           return this.walletAddress;
         })
         .catch((err:any) => {

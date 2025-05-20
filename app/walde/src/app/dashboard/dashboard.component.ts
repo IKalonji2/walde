@@ -14,32 +14,7 @@ import { CreateProjectModalComponent } from '../create-project-modal/create-proj
 })
 export class DashboardComponent {
   profile: any;
-  projects: any[] = [
-    {
-      id: 1,
-      repoName: 'Hello Demo',
-      branch: 'main',
-      status: 'Pending'
-    },
-    {
-      id: 2,
-      repoName: 'Hello Demo',
-      branch: 'main',
-      status: 'Pending'
-    },
-    {
-      id: 3,
-      repoName: 'Hello Demo',
-      branch: 'main',
-      status: 'Pending'
-    },
-    {
-      id: 4,
-      repoName: 'Hello Demo',
-      branch: 'main',
-      status: 'Pending'
-    },
-  ];
+  projects: any[] = [];
 
   showCreateModal = false;
 

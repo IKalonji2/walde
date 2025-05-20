@@ -13,5 +13,5 @@ def wallet_login():
         user = User(wallet_address=wallet_address)
         db.session.add(user)
         db.session.commit()
-    token = create_access_token(identity=user.id)
+    token = create_access_token(identity=str(user.id))
     return jsonify(access_token=token)

@@ -6,6 +6,8 @@ from app.services.encryption import encrypt_token
 from flask_jwt_extended import jwt_required, get_jwt_identity
 import hmac
 import hashlib
+from dotenv import load_dotenv
+load_dotenv()
 
 
 bp = Blueprint("github", __name__, url_prefix="/api/github")
@@ -37,7 +39,7 @@ def callback():
     user.encrypted_github_token = encrypt_token(access_token)
     db.session.commit()
 
-    return redirect("https://app.walde.cloud/dashboard")
+    return redirect(os.getenv("CALLBACK_URL"))
 
 @bp.route('/webhook', methods=['POST'])
 def github_webhook():
