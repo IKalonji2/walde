@@ -15,7 +15,7 @@ def login():
     return redirect(f"https://github.com/login/oauth/authorize?client_id={os.getenv('GITHUB_CLIENT_ID')}&scope=repo")
 
 @bp.route('/callback')
-@jwt_required()
+# @jwt_required()
 def callback():
     code = request.args.get('code')
     token_res = requests.post(
