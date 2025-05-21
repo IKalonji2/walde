@@ -1,12 +1,15 @@
-from flask import Blueprint, request, redirect, abort
+from flask import Blueprint, request, redirect, abort, jsonify
 import os, requests
 from app.extensions import db
 from app.models import User
 from app.services.encryption import encrypt_token
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, decode_token
 import hmac
 import hashlib
 from dotenv import load_dotenv
+from app.services.github_service import get_user_github_repos
+from app.models import User, Build
+
 load_dotenv()
 
 
@@ -14,12 +17,26 @@ bp = Blueprint("github", __name__, url_prefix="/api/github")
 
 @bp.route('/login')
 def login():
-    return redirect(f"https://github.com/login/oauth/authorize?client_id={os.getenv('GITHUB_CLIENT_ID')}&scope=repo")
+    jwt_token = request.args.get("token")
+    return redirect(f"https://github.com/login/oauth/authorize?client_id={os.getenv('GITHUB_CLIENT_ID')}&scope=repo&state={jwt_token}")
 
 @bp.route('/callback')
-# @jwt_required()
 def callback():
     code = request.args.get('code')
+    jwt_token = request.args.get('state')
+
+    if not jwt_token:
+        return jsonify({"msg": "Missing state (token)"}), 400
+
+    try:
+        decoded_token = decode_token(jwt_token)
+        user_id = decoded_token.get('sub')
+        if not user_id:
+            raise Exception("Missing subject")
+    except Exception as e:
+        return jsonify({"msg": f"Invalid token: {str(e)}"}), 401
+
+    # Exchange code for GitHub token
     token_res = requests.post(
         'https://github.com/login/oauth/access_token',
         data={
@@ -29,17 +46,21 @@ def callback():
         },
         headers={'Accept': 'application/json'}
     )
-    access_token = token_res.json()['access_token']
+
+    access_token = token_res.json().get('access_token')
+    if not access_token:
+        return jsonify({"msg": "GitHub access denied"}), 400
+
     user_data = requests.get('https://api.github.com/user', headers={
         'Authorization': f'token {access_token}'
     }).json()
 
-    user = User.query.get(get_jwt_identity())
-    user.github_username = user_data['login']
+    user = User.query.get(user_id)
+    user.github_username = user_data.get('login')
     user.encrypted_github_token = encrypt_token(access_token)
     db.session.commit()
 
-    return redirect(os.getenv("CALLBACK_URL"))
+    return redirect(os.getenv('CALLBACK_URL'))
 
 @bp.route('/webhook', methods=['POST'])
 def github_webhook():

@@ -17,6 +17,7 @@ def get_user_github_repos(user: User):
     return res.json()
 
 def get_repo_code(repo_url: str, branch: str, target_dir: str):
+    repo_url = f"https://github.com/{repo_url}.git"
     subprocess.run([
         "git", "clone", "--branch", branch, "--depth", "1", repo_url, target_dir
     ], check=True)

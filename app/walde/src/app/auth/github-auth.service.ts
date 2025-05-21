@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment';
 export class GithubAuthService {
 
   redirectToGithubOAuth() {
-    window.location.href = `${environment.apiUrl}/api/github/login`;
+    const token = localStorage.getItem('walde_token');
+    window.location.href = `${environment.apiUrl}/api/github/login?token=${token}`;
   }
 }

@@ -34,4 +34,8 @@ export class ApiService {
   getUserRepos() {
     return this.http.get<any[]>(`${environment.apiUrl}/api/github/repos`);
   }
+
+  rebuildBuild(id: string) {
+    return this.http.post(`${environment.apiUrl}/api/build/${id}/rebuild`, {});
+  }
 }

@@ -27,6 +27,13 @@
     </div>
 
     <div>
+      <p class="text-sm text-gray-500">Object ID</p>
+      <a [href]="build?.siteObjectId" target="_blank" class="text-blue-600 hover:underline">
+        {{ build?.siteObjectId || '-' }}
+      </a>
+    </div>
+
+    <div>
       <p class="text-sm text-gray-500">Branch</p>
       <p class="text-base text-gray-800 font-medium">{{ build?.branch || '-' }}</p>
     </div>
@@ -35,13 +42,21 @@
       <p class="text-sm text-gray-500">Status</p>
       <span class="inline-block mt-1 px-3 py-1 text-sm font-semibold rounded-full"
             [ngClass]="{
-              'bg-blue-100 text-blue-800': build?.status?.includes('building') || build?.status?.includes('queued'),
-              'bg-yellow-100 text-yellow-800': build?.status?.includes('pending'),
-              'bg-green-100 text-green-800': build?.status === 'success',
+              'bg-blue-100 text-blue-800': build?.status?.includes('building') || build?.status?.includes('queued') || build?.status?.includes('installed'),
+              'bg-yellow-100 text-yellow-800': build?.status?.includes('pending') || build?.status?.includes('build success'),
+              'bg-green-100 text-green-800': build?.status === 'success' || build?.status === 'deployed',
               'bg-red-100 text-red-800': build?.status === 'failed'
             }">
         {{ build?.status || '-' }}
       </span>
+    </div>
+
+    <div class="mt-4" *ngIf="build?.status === 'failed'">
+      <button
+        (click)="rebuild()"
+        class="bg-orange-600 hover:bg-orange-700 text-white font-semibold px-4 py-2 rounded shadow">
+        🔁 Rebuild
+      </button>
     </div>
 
     <div>
@@ -54,7 +69,7 @@
   <div class="bg-white rounded-lg shadow-md p-4">
     <h3 class="text-lg font-semibold text-gray-800 mb-2">📄 Build Logs</h3>
     <div class="bg-black text-white text-sm p-4 rounded-md h-80 overflow-y-scroll font-mono whitespace-pre-wrap">
-      {{ build?.log || 'No logs yet...' }}
+    Live logs (Do not refresh page)<br>{{ build?.log || 'No logs yet...' }}
     </div>
   </div>
 </div>

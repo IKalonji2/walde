@@ -20,4 +20,5 @@ class Build(db.Model):
     log = db.Column(db.Text)
     app_url = db.Column(db.String(255))
     auto_deploy = db.Column(db.Boolean, default=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now())
+    site_object_id = db.Column(db.String(128))

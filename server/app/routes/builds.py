@@ -48,5 +48,25 @@ def get_build(build_id):
         "branch": build.branch,
         "status": build.status,
         "outputDir": build.output_dir,
-        "log": build.log
+        "log": build.log,
+        "siteObjectId": build.site_object_id
     }
+
+@bp.route('/<build_id>/rebuild', methods=['POST'])
+@jwt_required()
+def rebuild(build_id):
+    build = Build.query.get(build_id)
+
+    if not build or build.user_id != get_jwt_identity():
+        return {"error": "Unauthorized or not found"}, 404
+
+    # Reset status and clear log
+    build.status = 'queued'
+    build.log = ''
+    db.session.commit()
+
+    from app.tasks.build_tasks import run_build
+    run_build.delay(build.id)
+
+    return {"msg": "Rebuild started"}
+
