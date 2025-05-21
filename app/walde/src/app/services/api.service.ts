@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { CloudFunction } from '../model/function.model';
 
 @Injectable({
   providedIn: 'root'
@@ -38,4 +39,21 @@ export class ApiService {
   rebuildBuild(id: string) {
     return this.http.post(`${environment.apiUrl}/api/build/${id}/rebuild`, {});
   }
+
+  getFunctions() {
+    return this.http.get<CloudFunction[]>(`${environment.apiUrl}/api/functions`);
+  }
+  
+  createFunction(payload: {
+    name: string;
+    description?: string;
+    code: string;
+  }) {
+    return this.http.post(`${environment.apiUrl}/api/functions`, payload);
+  }
+  
+  invokeFunction(id: string, input: any) {
+    return this.http.post(`${environment.apiUrl}/functions/${id}/invoke`, { input });
+  }
+  
 }

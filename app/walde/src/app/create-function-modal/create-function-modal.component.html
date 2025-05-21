@@ -1,0 +1,15 @@
+<div class="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+    <div class="bg-white w-full max-w-2xl p-6 rounded shadow space-y-4">
+      <h2 class="text-lg font-semibold">Create Function</h2>
+  
+      <input class="w-full p-2 border rounded" [(ngModel)]="name" placeholder="Function Name" />
+      <input class="w-full p-2 border rounded" [(ngModel)]="description" placeholder="Description (optional)" />
+      <textarea class="w-full p-2 border rounded font-mono text-sm" rows="10" [(ngModel)]="code"></textarea>
+  
+      <div class="flex justify-end space-x-2">
+        <button class="px-4 py-2 bg-gray-200 rounded" (click)="close.emit()">Cancel</button>
+        <button class="px-4 py-2 bg-blue-600 text-white rounded" (click)="submit()">Deploy</button>
+      </div>
+    </div>
+  </div>
+  

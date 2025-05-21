@@ -1,39 +1,75 @@
 
 <app-profile></app-profile>
-
-<div class="max-w-6xl mx-auto px-6 py-10">
-  <!-- Header -->
-  <div class="flex justify-between items-center mb-6">
-    <h2 class="text-2xl font-bold text-gray-800">My Projects</h2>
-    <button
-      (click)="createNewProject()"
-      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium shadow"
-    >
-      + Create New
-    </button>
-  </div>
-  
-  <app-create-project-modal *ngIf="showCreateModal" (closeModal)="showCreateModal = false"></app-create-project-modal>
-
-  <!-- Projects Grid -->
-  <div *ngIf="projects!.length > 0; else noProjects">
-    <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-      <div
-        *ngFor="let project of projects"
-        class="bg-white shadow-md rounded-lg p-4 cursor-pointer hover:shadow-lg transition"
-        (click)="goToBuild(project.id)"
+<br>
+<br>
+<div class="border-b border-gray-200 mb-6">
+  <div class="max-w-4xl mx-auto px-4">
+    <nav class="flex justify-center space-x-4">
+      <button
+        (click)="activeTab = 'projects'"
+        [ngClass]="{
+          'border-b-2 border-blue-600 text-blue-600': activeTab === 'projects',
+          'text-gray-500 hover:text-gray-700': activeTab !== 'projects'
+        }"
+        class="px-4 py-2 text-sm font-medium"
       >
-        <h3 class="text-lg font-semibold text-gray-800">{{ project.repoName }}</h3>
-        <p class="text-sm text-gray-500 truncate">Branch: {{ project.branch }}</p>
-        <p class="text-sm text-gray-400 truncate">Status: {{ project.status }}</p>
+        🧱 Projects
+      </button>
+      <button
+        (click)="activeTab = 'functions'"
+        [ngClass]="{
+          'border-b-2 border-blue-600 text-blue-600': activeTab === 'functions',
+          'text-gray-500 hover:text-gray-700': activeTab !== 'functions'
+        }"
+        class="px-4 py-2 text-sm font-medium"
+      >
+        🧠 Functions
+      </button>
+    </nav>
+  </div>
+</div>
+
+<div *ngIf="activeTab === 'projects'">
+  <div class="max-w-6xl mx-auto px-6 py-10">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold text-gray-800">My Projects</h2>
+      <button
+        (click)="createNewProject()"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium shadow"
+      >
+        + Create New
+      </button>
+    </div>
+    
+    <app-create-project-modal *ngIf="showCreateModal" (closeModal)="showCreateModal = false"></app-create-project-modal>
+  
+    <!-- Projects Grid -->
+    <div *ngIf="projects!.length > 0; else noProjects">
+      <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+        <div
+          *ngFor="let project of projects"
+          class="bg-white shadow-md rounded-lg p-4 cursor-pointer hover:shadow-lg transition"
+          (click)="goToBuild(project.id)"
+        >
+          <h3 class="text-lg font-semibold text-gray-800">{{ project.repoName }}</h3>
+          <p class="text-sm text-gray-500 truncate">Branch: {{ project.branch }}</p>
+          <p class="text-sm text-gray-400 truncate">Status: {{ project.status }}</p>
+        </div>
       </div>
     </div>
+  
+    <!-- No Projects Placeholder -->
+    <ng-template #noProjects>
+      <div class="text-center text-gray-500 mt-10">
+        <p>You have no builds yet. Click <strong>+ Create New</strong> to get started.</p>
+      </div>
+    </ng-template>
   </div>
-
-  <!-- No Projects Placeholder -->
-  <ng-template #noProjects>
-    <div class="text-center text-gray-500 mt-10">
-      <p>You have no builds yet. Click <strong>+ Create New</strong> to get started.</p>
-    </div>
-  </ng-template>
 </div>
+
+<div *ngIf="activeTab === 'functions'">
+  <app-functions></app-functions> <!-- Already built in previous step -->
+</div>
+
+

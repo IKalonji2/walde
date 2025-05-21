@@ -1,0 +1,15 @@
+<div class="space-y-4">
+    <h2 class="text-xl font-semibold">Test Function</h2>
+  
+    <textarea [(ngModel)]="input" rows="5" class="w-full p-2 border rounded font-mono text-sm" placeholder="Test input (JSON, string, etc)"></textarea>
+  
+    <button class="bg-green-600 text-white px-4 py-2 rounded" (click)="runTest()">▶ Run</button>
+  
+    <div *ngIf="result" class="bg-gray-100 mt-4 p-4 rounded">
+      <h3 class="font-semibold">Result</h3>
+      <pre>{{ result | json }}</pre>
+    </div>
+  
+    <div *ngIf="error" class="text-red-600 mt-4">{{ error }}</div>
+  </div>
+  

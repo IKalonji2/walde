@@ -1,0 +1,31 @@
+<div class="max-w-4xl mx-auto px-4 space-y-6">
+
+    <div class="flex justify-between items-center">
+      <h2 class="text-xl font-semibold">🧠 Cloud Functions</h2>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded" (click)="openModal()">
+        + New Function
+      </button>
+    </div>
+  
+    <div *ngIf="functions.length === 0" class="text-gray-500 mt-10">No functions yet.</div>
+  
+    <div class="grid grid-cols-1 gap-4">
+      <div *ngFor="let fn of functions" class="p-4 bg-white rounded shadow">
+        <h3 class="font-bold text-lg">{{ fn.name }}</h3>
+        <p class="text-sm text-gray-600">{{ fn.description }}</p>
+        <div class="text-sm text-blue-600 truncate mt-2" title="{{ fn.url }}">
+          {{ fn.url }}
+        </div>
+        <div class="text-xs text-gray-400 mt-1">
+          Created: {{ fn.createdAt | date:'medium' }}
+        </div>
+        <a [routerLink]="['/functions', fn.id]" class="text-sm text-indigo-600 mt-2 inline-block hover:underline">
+          ▶ Test
+        </a>
+      </div>
+    </div>
+  
+  </div>
+  
+  <app-create-function-modal *ngIf="showModal" (close)="onCreated()"></app-create-function-modal>
+  
