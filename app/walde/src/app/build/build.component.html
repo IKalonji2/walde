@@ -3,9 +3,11 @@
 <div class="max-w-5xl mx-auto py-10 px-4 space-y-6">
   <!-- Header -->
   <h2 class="text-2xl font-bold text-gray-800">🚧 Build Details</h2>
-
+  <button
+  class="text-blue-600 hover:underline text-sm mb-4 inline-flex items-center"
+  (click)="goBack()">← Back to Dashboard</button>
   <!-- Metadata Grid -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white p-6 rounded-lg shadow">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white p-6 rounded-lg shadow max-w-full overflow-x-auto">
     <div>
       <p class="text-sm text-gray-500">App</p>
       <p class="text-base font-semibold text-gray-800">{{ build?.appName || '-' }}</p>
@@ -18,16 +20,16 @@
       </a>
     </div>
 
-    <div>
-      <p class="text-sm text-gray-500">App URL</p>
+    <div class="max-w-full overflow-x-auto">
+      <p class="truncate text-sm text-gray-500 max-w-full">App URL</p>
       <a *ngIf="build?.appUrl" [href]="build?.appUrl" target="_blank" class="text-blue-600 hover:underline">
         {{ build?.appUrl }}
       </a>
       <span *ngIf="!build?.appUrl">-</span>
     </div>
 
-    <div>
-      <p class="text-sm text-gray-500">Object ID</p>
+    <div class="max-w-full overflow-x-auto">
+      <p class="truncate text-sm text-gray-500 max-w-full">Object ID</p>
       <a [href]="build?.siteObjectId" target="_blank" class="text-blue-600 hover:underline">
         {{ build?.siteObjectId || '-' }}
       </a>

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../services/api.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { ProfileComponent } from '../profile/profile.component';
 import { interval, Subscription } from 'rxjs';
 
@@ -17,7 +17,7 @@ export class BuildComponent implements OnInit, OnDestroy{
   build: any;
   pollingSub!: Subscription;
 
-  constructor(private route: ActivatedRoute, private api: ApiService) {}
+  constructor(private route: ActivatedRoute, private api: ApiService, private location: Location) {}
 
   ngOnInit(): void {
     this.buildId = this.route.snapshot.paramMap.get('id')!;
@@ -65,5 +65,9 @@ export class BuildComponent implements OnInit, OnDestroy{
       },
       error: (err) => console.error('Rebuild failed', err)
     });
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

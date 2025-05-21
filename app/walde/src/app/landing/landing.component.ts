@@ -15,12 +15,16 @@ export class LandingComponent {
 
   async getStarted() {
     console.log("getStarted() clicked");
+    await this.walletAuth.login().then(address =>{
+      console.log("address: ", address);
+      if (address) {
+        this.router.navigate(['/dashboard']);
+      } 
+      // else {
+      //   alert('Please connect your wallet to continue.');
+      // } 
+    });
     
-    const address = await this.walletAuth.login();
-    if (address) {
-      this.router.navigate(['/dashboard']);
-    } else {
-      alert('Please connect your wallet to continue.');
-    }
+    
   }
 }

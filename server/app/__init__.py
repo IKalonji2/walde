@@ -11,10 +11,12 @@ def create_app():
     jwt.init_app(app)
     cors.init_app(app)
 
-    from .routes import auth, github, builds, user
+    from .routes import auth, github, builds, user, functions, function_exec
     app.register_blueprint(auth.bp)
     app.register_blueprint(github.bp)
     app.register_blueprint(builds.bp)
     app.register_blueprint(user.bp)
-    
+    app.register_blueprint(functions.bp)
+    app.register_blueprint(function_exec.bp)
+
     return app
