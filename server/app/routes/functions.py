@@ -3,6 +3,9 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models import Function, db
 from app.services.function_service import deploy_function_to_walrus
 import uuid
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 bp = Blueprint("functions", __name__, url_prefix="/api/functions")
 
@@ -32,7 +35,7 @@ def create_function():
 
     return {
         "id": fn.id,
-        "url": f"https://{slug}.walde.cloud/functions/{fn.id}"
+        "url": f"{os.getenv('FUNCTION_INVOKE_BASE_URL')}/{fn.id}/invoke"
     }
 
 @bp.route("", methods=["GET"])
@@ -44,6 +47,6 @@ def list_functions():
         "id": fn.id,
         "name": fn.name,
         "description": fn.description,
-        "url": f"https://{fn.slug}.walde.cloud/functions/{fn.id}",
+        "url": f"{os.getenv('FUNCTION_INVOKE_BASE_URL')}/{fn.id}/invoke",
         "createdAt": fn.created_at.isoformat()
     } for fn in fns]

@@ -30,12 +30,12 @@ def deploy_function_to_walrus(code: str) -> Tuple[str, str]:
         shutil.rmtree(tmp_path, ignore_errors=True)
 
 def extract_walrus_function_info(output: str) -> Tuple[str, str]:
-    slug_match = re.search(r"Blob ID:\s*(0x[a-fA-F0-9]+)", output)
+    blob_id_match = re.search(r"Blob ID:\s*([a-zA-Z0-9_-]+)", output)
     obj_id_match = re.search(r"Sui object ID:\s*(0x[a-fA-F0-9]+)", output)
-
-    if not slug_match or not obj_id_match:
+    
+    if not blob_id_match or not obj_id_match:
         raise ValueError("Failed to extract Walrus info")
 
-    slug = slug_match.group(1)
+    blob_id = blob_id_match.group(1)
     object_id = obj_id_match.group(1)
-    return slug, object_id
+    return blob_id, object_id

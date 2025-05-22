@@ -32,5 +32,5 @@ class Function(db.Model):
     description = db.Column(db.Text)
     code = db.Column(db.Text, nullable=False)
     walrus_object_id = db.Column(db.String(128))
-    slug = db.Column(db.String(128))  # used to form walde.cloud subdomain
+    blod_id = db.Column(db.String(128))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

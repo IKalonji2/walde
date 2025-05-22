@@ -8,7 +8,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         headers: req.headers.append('Authorization', `Bearer ${token}`)
       }
     );
-    console.log(interceptedRequestWithHeader);
     
     return next(interceptedRequestWithHeader);
   }
