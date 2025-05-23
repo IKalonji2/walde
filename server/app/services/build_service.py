@@ -21,7 +21,7 @@ def extract_walrus_deployment_info(shell_output: str) -> Optional[Tuple[str, str
     if slug_match and obj_id_match:
         slug = slug_match.group(1)
         obj_id = obj_id_match.group(1)
-        final_url = f"https://{slug}.walde.cloud"
+        final_url = f"https://portal.walde.cloud/{slug}"
         return final_url, obj_id
 
     return None
