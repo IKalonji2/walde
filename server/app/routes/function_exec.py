@@ -19,7 +19,7 @@ def invoke_function(function_id):
         try:
             # Fetch code from Walrus blob ID
             subprocess.run(
-                ["walrus", "read", fn.blob_id, "--out", code_path],
+                ["walrus", "read", fn.blod_id, "--out", code_path],
                 check=True,
                 capture_output=True,
                 text=True

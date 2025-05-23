@@ -19,14 +19,14 @@ def create_function():
     if "def run(" not in code:
         return {"error": "Your function must contain a `run(input)` definition."}, 400
 
-    slug, object_id = deploy_function_to_walrus(code)
+    blob_id, object_id = deploy_function_to_walrus(code)
 
     fn = Function(
         user_id=user_id,
         name=data.get("name"),
         description=data.get("description", ""),
         code=code,
-        slug=slug,
+        blod_id=blob_id,
         walrus_object_id=object_id
     )
 

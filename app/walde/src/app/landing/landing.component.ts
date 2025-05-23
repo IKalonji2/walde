@@ -11,6 +11,7 @@ import { WalletAuthService } from '../auth/wallet-auth.service';
   styleUrl: './landing.component.css'
 })
 export class LandingComponent {
+  imgPath = "../../assets/walde_cloud.png"
   constructor(private walletAuth: WalletAuthService, private router: Router) {}
 
   async getStarted() {

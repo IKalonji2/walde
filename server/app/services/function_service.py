@@ -18,7 +18,7 @@ def deploy_function_to_walrus(code: str) -> Tuple[str, str]:
 
     try:
         result = subprocess.run(
-            ["walrus", "store", tmp_path, "--epochs", "1"],
+            ["walrus", "store", code_path, "--epochs", "1"],
             capture_output=True,
             text=True
         )
@@ -32,7 +32,9 @@ def deploy_function_to_walrus(code: str) -> Tuple[str, str]:
 def extract_walrus_function_info(output: str) -> Tuple[str, str]:
     blob_id_match = re.search(r"Blob ID:\s*([a-zA-Z0-9_-]+)", output)
     obj_id_match = re.search(r"Sui object ID:\s*(0x[a-fA-F0-9]+)", output)
-    
+    print(output)
+    print("-----------------")
+    print(blob_id_match, obj_id_match)
     if not blob_id_match or not obj_id_match:
         raise ValueError("Failed to extract Walrus info")
 

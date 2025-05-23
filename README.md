@@ -8,7 +8,7 @@
 - 🧠 Cloud Functions run via API with no servers
 
 > **Live App:** [https://app.walde.cloud](https://app.walde.cloud)  
-> **Demo Video:** 📺 _[YouTube link placeholder]_
+> **Demo Video:** 📺 [[YouTube demo](https://youtu.be/09zBjlYg4QE)]
 
 ---
 
@@ -26,6 +26,8 @@
 
 ## 🔧 How To Use Walde ([https://app.walde.cloud](https://app.walde.cloud))
 
+FORK THE TEST SITE REPO HERE (https://github.com/IKalonji2/demo-walde-site) TO TEST WEBSITE DEPLOYMENT FUNCTIONALITY
+
 ### 🚀 Deploy a Site from GitHub
 
 1. Connect your Sui wallet (e.g. Sui Wallet, Ethos).
@@ -35,7 +37,7 @@
    - **Repository**
    - **Branch**
    - **Build command** (e.g. `npm run build`)
-   - **Output directory** (e.g. `/dist`)
+   - **Output directory** (e.g. `/dist/demo-walde-site/browser`)
 5. Click **"Start Build"**.
 6. Once deployed, get your **permanent Walrus-hosted site URL**.
 
@@ -146,7 +148,7 @@ This helps foster a trustless, decentralized development environment that benefi
 
 ## 🎥 Demo Video
 📺 YouTube Demo:
-https://youtube.com/watch?v=XXXXXXXXXXX
+https://youtube.com/watch?v=09zBjlYg4QE
 
 ## 🤝 Built With
 💻 Angular + Tailwind (UI)
